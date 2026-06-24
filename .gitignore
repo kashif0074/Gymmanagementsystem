@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.expo/
+
+# .NET
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal
+.vs/
+
+# OS
+.DS_Store
+Thumbs.db

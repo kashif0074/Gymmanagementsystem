@@ -1,0 +1,108 @@
+@GymManagementSystem.Server_HostAddress = http://localhost:5199
+
+### 1. Admin Login (Retrieve Token)
+# @name loginAdmin
+POST {{GymManagementSystem.Server_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "mode": "admin"
+}
+
+### Extract Admin Token from Response
+@adminToken = {{loginAdmin.response.body.token}}
+
+### 2. Member Login (Retrieve Token)
+# @name loginMember
+POST {{GymManagementSystem.Server_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "member",
+  "password": "member123",
+  "mode": "member"
+}
+
+### Extract Member Token from Response
+@memberToken = {{loginMember.response.body.token}}
+
+
+### 3. GET Members (Requires Admin Token)
+GET {{GymManagementSystem.Server_HostAddress}}/api/members
+Authorization: Bearer {{adminToken}}
+
+
+### 4. Create Member (Requires Admin Token)
+POST {{GymManagementSystem.Server_HostAddress}}/api/members
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Test Member",
+  "email": "test@example.com",
+  "phone": "+92 300 1111111",
+  "plan": "Monthly",
+  "status": "Active",
+  "username": "testmember",
+  "passwordHash": ""
+}
+
+
+### 5. GET Trainers (Public - No Token Required)
+GET {{GymManagementSystem.Server_HostAddress}}/api/trainers
+
+
+### 6. GET Payments (Requires Admin Token)
+GET {{GymManagementSystem.Server_HostAddress}}/api/payments
+Authorization: Bearer {{adminToken}}
+
+
+### 7. GET Attendance Logs (Requires Admin Token)
+GET {{GymManagementSystem.Server_HostAddress}}/api/attendance
+Authorization: Bearer {{adminToken}}
+
+
+### 8. GET Plans (Public - No Token Required)
+GET {{GymManagementSystem.Server_HostAddress}}/api/plans
+
+
+### 9. GET Schedule (Public - No Token Required)
+GET {{GymManagementSystem.Server_HostAddress}}/api/schedule
+
+
+### 10. GET Settings (Requires Admin Token)
+GET {{GymManagementSystem.Server_HostAddress}}/api/settings
+Authorization: Bearer {{adminToken}}
+
+
+### 11. Register New Account (Public - Password & Username Included)
+POST {{GymManagementSystem.Server_HostAddress}}/api/registrations
+Content-Type: application/json
+
+{
+  "name": "New Member",
+  "username": "newmember1",
+  "password": "password123",
+  "age": 25,
+  "gender": "Male",
+  "phone": "03001234567",
+  "plan": "monthly"
+}
+
+
+### 12. Submit Contact Inquiry (Public - No Token Required)
+POST {{GymManagementSystem.Server_HostAddress}}/api/contact
+Content-Type: application/json
+
+{
+  "name": "Fatima",
+  "email": "fatima@example.com",
+  "message": "I would like to know about yearly plans."
+}
+
+
+### 13. GET Dashboard Stats (Requires Admin Token)
+GET {{GymManagementSystem.Server_HostAddress}}/api/dashboard/stats
+Authorization: Bearer {{adminToken}}
