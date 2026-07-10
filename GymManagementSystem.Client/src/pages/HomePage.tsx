@@ -14,7 +14,7 @@ export function HomePage() {
 
   useEffect(() => {
     dashboardApi
-      .stats()
+      .publicStats()
       .then((stats) => {
         setMemberTotal(stats.totalMembers)
         setTrainerTotal(stats.totalTrainers)

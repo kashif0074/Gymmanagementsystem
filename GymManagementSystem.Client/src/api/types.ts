@@ -219,4 +219,5 @@ export const contactApi = {
 
 export const dashboardApi = {
   stats: () => api.get<DashboardStats>('/dashboard/stats'),
+  publicStats: () => api.get<{ totalMembers: number; totalTrainers: number }>('/dashboard/public-stats'),
 }
