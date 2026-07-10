@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
                 "http://localhost:5173",
                 "http://localhost:5174",
                 "http://127.0.0.1:5173",
-                "https://your-project-name.vercel.app" // update this after step 4
+                "https://gymmanagementsystem-livid.vercel.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod());
