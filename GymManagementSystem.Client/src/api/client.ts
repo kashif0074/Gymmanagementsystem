@@ -20,8 +20,11 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
   if (!response.ok) {
     if (response.status === 401) {
+      const hadSession = !!session?.token
       localStorage.removeItem('gym-auth')
-      window.location.href = '/login?expired=true'
+      if (hadSession) {
+        window.location.href = '/login?expired=true'
+      }
       throw new Error('Session expired. Please log in again.')
     }
 
